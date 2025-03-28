@@ -1,0 +1,16 @@
+{
+    "averitt": {
+      "prod": {},
+      "test": {
+        "acatsRequirement": "false",
+        "cluster": "aks-ave4u-nonprod"
+      }
+    },
+    "cargill": {
+      "prod": {},
+      "test": {
+        "cluster": "aks-cgl60-nonprod"    
+        
+      }
+    }
+}
