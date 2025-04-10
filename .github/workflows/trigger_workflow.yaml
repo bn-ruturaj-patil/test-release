@@ -116,7 +116,7 @@ jobs:
       filter_title: ${{ inputs.filter_title }}
       cluster_name: ${{ inputs.cluster_name }}
       status: ${{ inputs.status }}
-      # metric_type: ${{ inputs.metric_type }}
+      metric_type: ${{ inputs.metric_type }}
       metric_type_custom: ${{ inputs.metric_type_custom }}
       from_date: ${{ inputs.from_date }}
       end_date: ${{ inputs.end_date }}
