@@ -19,38 +19,81 @@ on:
       filter_title:
         description: "Filter title to identify reason for adhoc drop rule"
         required: true
-        type: string
 
       cluster_name:
         description: "Cluster name"
         required: true
-        type: string
+        type: choice
+        default: ""
+        options:
+          - aks-test-nonprod
+          - aks-ave4u-nonprod
+          - aks-bi50n-nonprod
+          - aks-cgl60-nonprod
+          - aks-cat7x-nonprod
+          - aks-chs9l-nonprod
+          - aks-co2yt-nonprod
+          - aks-dg3nl-nonprod
+          - aks-eva9o-nonprod
+          - aks-kdp5t-nonprod
+          - aks-ls8fm-nonprod
+          - aks-ml100-nonprod
+          - aks-mm100-nonprod
+          - aks-mit01-nonprod
+          - aks-moy23-nonprod
+          - aks-pep5c-nonprod
+          - aks-pr100-nonprod
+          - aks-ru100-nonprod
+          - aks-sn100-nonprod
+          - aks-tb100-nonprod
+          - aks-td100-nonprod
+          - aks-tm100-nonprod
+          - aks-usmmg-nonprod
+          - aks-we100-nonprod
 
       status:
         description: "Check to enable rule, uncheck to disable."
-        required: true
+        default: true
         type: boolean
 
       metric_type:
         description: "Metric type"
         required: true
-        type: string
+        type: choice
+        default: ""
+        options:
+          - Log
+          - Metric
+          - K8s*
+          - Transaction
+          - Span
+          - K8sClusterSample
+          - K8sContainerSample
+          - K8sDaemonsetSample
+          - K8sDeploymentSample
+          - K8sEndpointSample
+          - K8sNamespaceSample
+          - K8sNodeSample
+          - K8sPodSample
+          - K8sReplicasetSample
+          - K8sServiceSample
+          - K8sStatefulsetSample
+          - K8sVolumeSample
 
       metric_type_custom:
-        description: "Comma-separated list of metric types (optional)"
-        required: false
+        description: "Comma-separated list of metric types (e.g., Log,Metric,K8sClusterSample). Overrides dropdown if provided."
         type: string
+        default: ""
 
       from_date:
-        description: "From date rule will be enforced (optional)"
-        required: false
+        description: "From date rule will be enforced, must be in YYYY-MM-DD format"
         type: string
+        required: false
 
       end_date:
-        description: "Till date rule will be enforced (optional)"
-        required: false
+        description: "Till date rule will be enforced, must be in YYYY-MM-DD format"
         type: string
-
+        required: false
 
 
 permissions:
