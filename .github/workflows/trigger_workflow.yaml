@@ -1,38 +1,79 @@
 name: Trigger Reusable Workflow
 
 # on:
-#   workflow_dispatch: # Allows manual triggering of this workflow
-
-# on:
 #   workflow_dispatch:
-#       inputs:
-#         cluster_name:
-#           description: "Cluster name"
-#           required: true
-#           type: string
+#     inputs:
+#       cluster_name:
+#         description: "Cluster name"
+#         required: true
+#         type: choice
+#         default: ""
+#         options:
+#           - aks-test-nonprod
+#           - aks-ave4u-nonprod
+#           - aks-bi50n-nonprod
 
 on:
   workflow_dispatch:
-    # inputs:
-    #   cluster_name:
-    #     description: "Cluster name"
-    #     required: true
-    #     type: choice
-    #     default: ""
-    #     options:
-    #       - aks-test-nonprod
-    #       - aks-ave4u-nonprod
-    #       - aks-bi50n-nonprod
+    inputs:
+      filter_title:
+        description: "Filter title to identify reason for adhoc drop rule"
+        required: true
+        type: string
+
+      cluster_name:
+        description: "Cluster name"
+        required: true
+        type: string
+
+      status:
+        description: "Check to enable rule, uncheck to disable."
+        required: true
+        type: boolean
+
+      metric_type:
+        description: "Metric type"
+        required: true
+        type: string
+
+      metric_type_custom:
+        description: "Comma-separated list of metric types (optional)"
+        required: false
+        type: string
+
+      from_date:
+        description: "From date rule will be enforced (optional)"
+        required: false
+        type: string
+
+      end_date:
+        description: "Till date rule will be enforced (optional)"
+        required: false
+        type: string
+
 
 
 permissions:
   id-token: write
   contents: read
 
+# jobs:
+#   call_reusable_workflow:
+#     name: Call Reusable Workflow
+#     uses: bn-ruturaj-patil/testing-workflow/.github/workflows/test_workflow.yaml@main
+#     with:
+#       cluster_name: ${{ inputs.cluster_name }}
+
+
 jobs:
   call_reusable_workflow:
     name: Call Reusable Workflow
     uses: bn-ruturaj-patil/testing-workflow/.github/workflows/test_workflow.yaml@main
     with:
+      filter_title: ${{ inputs.filter_title }}
       cluster_name: ${{ inputs.cluster_name }}
-
+      status: ${{ inputs.status }}
+      metric_type: ${{ inputs.metric_type }}
+      metric_type_custom: ${{ inputs.metric_type_custom }}
+      from_date: ${{ inputs.from_date }}
+      end_date: ${{ inputs.end_date }}
