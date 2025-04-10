@@ -13,16 +13,16 @@ name: Trigger Reusable Workflow
 
 on:
   workflow_dispatch:
-    inputs:
-      cluster_name:
-        description: "Cluster name"
-        required: true
-        type: choice
-        default: ""
-        options:
-          - aks-test-nonprod
-          - aks-ave4u-nonprod
-          - aks-bi50n-nonprod
+    # inputs:
+    #   cluster_name:
+    #     description: "Cluster name"
+    #     required: true
+    #     type: choice
+    #     default: ""
+    #     options:
+    #       - aks-test-nonprod
+    #       - aks-ave4u-nonprod
+    #       - aks-bi50n-nonprod
 
 
 permissions:
