@@ -1,0 +1,13 @@
+name: Trigger Reusable Workflow
+
+on:
+  workflow_dispatch: # Allows manual triggering of this workflow
+
+jobs:
+  call_reusable_workflow:
+    name: Call Reusable Workflow
+    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/reusable_workflow.yaml@main # Replace with your repo and branch
+    with:
+      cluster_name: aks-test-nonprod # Pass the required input
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Pass the required secret
