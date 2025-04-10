@@ -1,7 +1,14 @@
 name: Trigger Reusable Workflow
 
-on:
-  workflow_dispatch: # Allows manual triggering of this workflow
+# on:
+#   workflow_dispatch: # Allows manual triggering of this workflow
+
+workflow_dispatch:
+    inputs:
+      cluster_name:
+        description: "Cluster name"
+        required: true
+        type: string
 
 
 permissions:
@@ -13,4 +20,5 @@ jobs:
     name: Call Reusable Workflow
     uses: bn-ruturaj-patil/testing-workflow/.github/workflows/test_workflow.yaml@main
     with:
-      cluster_name: aks-test-nonprod
+      cluster_name: ${{ inputs.cluster_name }}
+
