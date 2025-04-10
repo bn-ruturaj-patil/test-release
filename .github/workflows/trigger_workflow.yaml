@@ -3,12 +3,13 @@ name: Trigger Reusable Workflow
 # on:
 #   workflow_dispatch: # Allows manual triggering of this workflow
 
-workflow_dispatch:
-    inputs:
-      cluster_name:
-        description: "Cluster name"
-        required: true
-        type: string
+on:
+  workflow_dispatch:
+      inputs:
+        cluster_name:
+          description: "Cluster name"
+          required: true
+          type: string
 
 
 permissions:
