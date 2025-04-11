@@ -1,37 +1,108 @@
-name: "Trigger Manage New Relic Log Ingestion"
+name: Call Reusable New Relic Log Ingestion Workflow
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       cluster_names:
+#         description: "Comma separated list of cluster names (e.g., aks-dev-nonprod,aks-test-nonprod)"
+#         required: true
+#         type: string
+#       metric_type:
+#         description: "Comma separated list of metric names (e.g., Log,Metric)"
+#         required: false
+#         default: ""
+#         type: string
+#       disable_ingestion:
+#         description: "Disable ingestion (true/false)"
+#         required: false
+#         default: false
+#         type: boolean
+#       created_by:
+#         description: "GitHub actor who triggered the workflow"
+#         required: false
+#         default: ""
+#         type: string
+
 
 on:
   workflow_dispatch:
     inputs:
-      cluster_names:
-        description: "Comma separated list of cluster names (e.g., aks-dev-nonprod,aks-test-nonprod)"
+      cluster_name:
+        description: "Cluster name"
         required: true
-        type: string
-      metric_type:
-        description: "Comma separated list of metric names (e.g., Log,Metric)"
-        required: false
+        type: choice
         default: ""
+        options:
+          - aks-test-nonprod
+          - aks-ave4u-nonprod
+          - aks-bi50n-nonprod
+          - aks-cgl60-nonprod
+          - aks-cat7x-nonprod
+          - aks-chs9l-nonprod
+          - aks-co2yt-nonprod
+          - aks-dg3nl-nonprod
+          - aks-eva9o-nonprod
+          - aks-kdp5t-nonprod
+          - aks-ls8fm-nonprod
+          - aks-ml100-nonprod
+          - aks-mm100-nonprod
+          - aks-mit01-nonprod
+          - aks-moy23-nonprod
+          - aks-pep5c-nonprod
+          - aks-pr100-nonprod
+          - aks-ru100-nonprod
+          - aks-sn100-nonprod
+          - aks-tb100-nonprod
+          - aks-td100-nonprod
+          - aks-tm100-nonprod
+          - aks-usmmg-nonprod
+          - aks-we100-nonprod
+
+      metric_type:
+        description: "Metric type (select one from the dropdown)"
+        type: choice
+        default: ""
+        options:
+          - Log
+          - Metric
+          - K8s*
+          - Transaction
+          - Span
+          - K8sClusterSample
+          - K8sContainerSample
+          - K8sDaemonsetSample
+          - K8sDeploymentSample
+          - K8sEndpointSample
+          - K8sNamespaceSample
+          - K8sNodeSample
+          - K8sPodSample
+          - K8sReplicasetSample
+          - K8sServiceSample
+          - K8sStatefulsetSample
+          - K8sVolumeSample
+
+      metric_type_custom:
+        description: "Comma-separated list of metric types (e.g., Log,Metric,K8sClusterSample). Overrides dropdown if provided."
         type: string
+        default: ""
+
       disable_ingestion:
-        description: "Disable ingestion (true/false)"
-        required: false
+        description: "Check to disable ingestion, uncheck to enable."
         default: false
         type: boolean
-      created_by:
-        description: "GitHub actor who triggered the workflow"
-        required: false
-        default: ""
-        type: string
 
 jobs:
   call_reusable_workflow:
-    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manage_new_relic_log_ingestion.yaml@main
+    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml@main
     with:
-      cluster_names: ${{ inputs.cluster_names }}
+      cluster_name: ${{ inputs.cluster_name }}
       metric_type: ${{ inputs.metric_type }}
+      metric_type_custom: ${{ inputs.metric_type_custom }}
       disable_ingestion: ${{ inputs.disable_ingestion }}
-      created_by: ${{ inputs.created_by }}
     secrets:
       client_id: ${{ secrets.CLIENT_ID }}
       tenant_id: ${{ secrets.TENANT_ID }}
       key_vault_name: ${{ secrets.KEY_VAULT_NAME }}
+    secrets:
+      GH_AZURE_CLIENT_ID: ${{ secrets.GH_AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
