@@ -1,0 +1,37 @@
+name: "Trigger Manage New Relic Log Ingestion"
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster_names:
+        description: "Comma separated list of cluster names (e.g., aks-dev-nonprod,aks-test-nonprod)"
+        required: true
+        type: string
+      metric_type:
+        description: "Comma separated list of metric names (e.g., Log,Metric)"
+        required: false
+        default: ""
+        type: string
+      disable_ingestion:
+        description: "Disable ingestion (true/false)"
+        required: false
+        default: false
+        type: boolean
+      created_by:
+        description: "GitHub actor who triggered the workflow"
+        required: false
+        default: ""
+        type: string
+
+jobs:
+  call_reusable_workflow:
+    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manage_new_relic_log_ingestion.yaml@main
+    with:
+      cluster_names: ${{ inputs.cluster_names }}
+      metric_type: ${{ inputs.metric_type }}
+      disable_ingestion: ${{ inputs.disable_ingestion }}
+      created_by: ${{ inputs.created_by }}
+    secrets:
+      client_id: ${{ secrets.CLIENT_ID }}
+      tenant_id: ${{ secrets.TENANT_ID }}
+      key_vault_name: ${{ secrets.KEY_VAULT_NAME }}
