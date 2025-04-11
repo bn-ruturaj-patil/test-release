@@ -100,9 +100,5 @@ jobs:
       metric_type_custom: ${{ inputs.metric_type_custom }}
       disable_ingestion: ${{ inputs.disable_ingestion }}
     secrets:
-      client_id: ${{ secrets.CLIENT_ID }}
-      tenant_id: ${{ secrets.TENANT_ID }}
-      key_vault_name: ${{ secrets.KEY_VAULT_NAME }}
-    secrets:
       GH_AZURE_CLIENT_ID: ${{ secrets.GH_AZURE_CLIENT_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
