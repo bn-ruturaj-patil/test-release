@@ -86,18 +86,35 @@ permissions:
   id-token: write
   contents: read
 
-
 jobs:
   call_reusable_workflow:
-    name: Call Reusable Workflow
-    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_nrql_adhoc_rule.yaml@main
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      filter_title: ${{ inputs.filter_title }}
-      cluster_name: ${{ inputs.cluster_name }}
-      status: ${{ inputs.status }}
-      metric_type: ${{ inputs.metric_type }}
-      metric_type_custom: ${{ inputs.metric_type_custom }}
-      from_date: ${{ inputs.from_date }}
-      end_date: ${{ inputs.end_date }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Reusable Workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TARGET_REPO_PAT }}
+          repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_nrql_adhoc_rule.yaml
+          event-type: manual-trigger
+          filter_title: ${{ inputs.filter_title }}
+          cluster_name: ${{ inputs.cluster_name }}
+          status: ${{ inputs.status }}
+          metric_type: ${{ inputs.metric_type }}
+          metric_type_custom: ${{ inputs.metric_type_custom }}
+          from_date: ${{ inputs.from_date }}
+          end_date: ${{ inputs.end_date }}
+
+# jobs:
+#   call_reusable_workflow:
+#     name: Call Reusable Workflow
+#     uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_nrql_adhoc_rule.yaml@main
+#     secrets:
+#       token: ${{ secrets.GITHUB_TOKEN }}
+#     with:
+#       filter_title: ${{ inputs.filter_title }}
+#       cluster_name: ${{ inputs.cluster_name }}
+#       status: ${{ inputs.status }}
+#       metric_type: ${{ inputs.metric_type }}
+#       metric_type_custom: ${{ inputs.metric_type_custom }}
+#       from_date: ${{ inputs.from_date }}
+#       end_date: ${{ inputs.end_date }}
