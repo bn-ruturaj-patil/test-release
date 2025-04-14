@@ -1,29 +1,5 @@
 name: Call Reusable New Relic Log Ingestion Workflow
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       cluster_names:
-#         description: "Comma separated list of cluster names (e.g., aks-dev-nonprod,aks-test-nonprod)"
-#         required: true
-#         type: string
-#       metric_type:
-#         description: "Comma separated list of metric names (e.g., Log,Metric)"
-#         required: false
-#         default: ""
-#         type: string
-#       disable_ingestion:
-#         description: "Disable ingestion (true/false)"
-#         required: false
-#         default: false
-#         type: boolean
-#       created_by:
-#         description: "GitHub actor who triggered the workflow"
-#         required: false
-#         default: ""
-#         type: string
-
-
 on:
   workflow_dispatch:
     inputs:
@@ -91,14 +67,38 @@ on:
         default: false
         type: boolean
 
+
+permissions:
+  id-token: write
+  contents: read
+
+# jobs:
+#   call_reusable_workflow:
+#     uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml@main
+#     with:
+#       cluster_name: ${{ inputs.cluster_name }}
+#       metric_type: ${{ inputs.metric_type }}
+#       metric_type_custom: ${{ inputs.metric_type_custom }}
+#       disable_ingestion: ${{ inputs.disable_ingestion }}
+#     secrets:
+#       GH_AZURE_CLIENT_ID: ${{ secrets.GH_AZURE_CLIENT_ID }}
+#       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
 jobs:
-  call_reusable_workflow:
-    uses: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml@main
-    with:
-      cluster_name: ${{ inputs.cluster_name }}
-      metric_type: ${{ inputs.metric_type }}
-      metric_type_custom: ${{ inputs.metric_type_custom }}
-      disable_ingestion: ${{ inputs.disable_ingestion }}
-    secrets:
-      GH_AZURE_CLIENT_ID: ${{ secrets.GH_AZURE_CLIENT_ID }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  call_reusable_workflow-nrql-log-ingestion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Reusable Workflow log ingestion
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TARGET_REPO_PAT }}
+          repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml
+          # repository: masterysystems/tools-engineering/.github/workflows/manual_new_relic_log_ingestion.yaml
+          event-type: manual-trigger-nrql-log-ingestion
+          client-payload: |
+            {
+              "cluster_name": "${{ inputs.cluster_name }}",
+              "metric_type": "${{ inputs.metric_type }}",
+              "metric_type_custom": "${{ inputs.metric_type_custom }}",
+              "disable_ingestion": "${{ inputs.disable_ingestion }}"
+            }
