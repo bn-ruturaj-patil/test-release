@@ -96,7 +96,7 @@ jobs:
           token: ${{ secrets.TARGET_REPO_PAT }}
           repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_nrql_adhoc_rule.yaml
           # repository: masterysystems/tools-engineering/.github/workflows/manage_nrql_adhoc_filter_add_rule.yaml
-          event-type: manual-trigger
+          event-type: manual-trigger-adhoc
           client-payload: |
             {
               "filter_title": "${{ inputs.filter_title }}",
