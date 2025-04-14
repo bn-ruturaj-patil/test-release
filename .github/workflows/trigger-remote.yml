@@ -1,0 +1,16 @@
+name: Trigger Remote Workflow
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger workflow in private repo
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TARGET_REPO_PAT }}
+          repository: bn-ruturaj-patil/testing-workflow/.github/workflows/deploy.yml
+          event-type: manual-trigger
