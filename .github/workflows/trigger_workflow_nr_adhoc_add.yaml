@@ -93,7 +93,8 @@ jobs:
       - name: Call Reusable Workflow
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.TARGET_REPO_PAT }}
+          # token: ${{ secrets.TARGET_REPO_PAT }}
+          token: ${{ secrets.TARGET_REPO_FG_PAT }}
           repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_nrql_adhoc_rule.yaml
           # repository: masterysystems/tools-engineering/.github/workflows/manage_nrql_adhoc_filter_add_rule.yaml
           event-type: manual-trigger-adhoc

@@ -91,7 +91,8 @@ jobs:
       - name: Call Reusable Workflow log ingestion
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.TARGET_REPO_PAT }}
+          # token: ${{ secrets.TARGET_REPO_PAT }}
+          token: ${{ secrets.TARGET_REPO_FG_PAT }}
           repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml
           # repository: masterysystems/tools-engineering/.github/workflows/manual_new_relic_log_ingestion.yaml
           event-type: manual-trigger-nrql-log-ingestion
