@@ -1,4 +1,5 @@
-name: Call Reusable New Relic Log Ingestion Workflow
+
+name: Manual NR Log Ingestion
 
 on:
   workflow_dispatch:
@@ -7,7 +8,7 @@ on:
         description: "Cluster name"
         required: true
         type: choice
-        default: ""
+        default: "aks-test-nonprod"
         options:
           - aks-test-nonprod
           - aks-ave4u-nonprod
@@ -85,15 +86,16 @@ permissions:
 #       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 jobs:
-  call_reusable_workflow-nrql-log-ingestion:
+  manage_ingestion:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Reusable Workflow log ingestion
+      - name: Manage NR Ingestion
         uses: peter-evans/repository-dispatch@v2
         with:
           # token: ${{ secrets.TARGET_REPO_PAT }}
           token: ${{ secrets.TARGET_REPO_FG_PAT }}
-          repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml
+          # repository: bn-ruturaj-patil/testing-workflow/.github/workflows/manual_new_relic_log_ingestion.yaml
+          repository: bn-ruturaj-patil/tools-engineering/.github/workflows/manual_new_relic_log_ingestion.yaml@main
           # repository: masterysystems/tools-engineering/.github/workflows/manual_new_relic_log_ingestion.yaml
           event-type: manual-trigger-nrql-log-ingestion
           client-payload: |
